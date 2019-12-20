@@ -85,7 +85,7 @@ class Array
   end
   
   def my_rotate(num = 1)
-    # Rotating by % of self.lenght allows you to only rotate 
+    # Rotating by % of self.length allows you to only rotate 
     # if the array will change after the rotations
     self.drop(num % self.length) + self.take(num % self.length)
   end
