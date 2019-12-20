@@ -89,7 +89,29 @@ class Array
     # if the array will change after the rotations
     self.drop(num % self.length) + self.take(num % self.length)
   end
-  
+
+  def my_join(char = nil)
+    str = ""
+
+    if char.nil?
+      self.each { |ele| str += ele } 
+    else
+      self[0..-2].each { |ele| str += ele + char }
+      str += self[-1]
+    end
+
+    str
+  end
+
+  def my_reverse
+    arr = self.dup
+    
+    return [] if arr.empty?
+
+    
+
+  end
+
 end
 
 
@@ -146,3 +168,12 @@ p a.my_rotate         #=> ["b", "c", "d", "a"]
 p a.my_rotate(2)      #=> ["c", "d", "a", "b"]
 p a.my_rotate(-3)     #=> ["b", "c", "d", "a"]
 p a.my_rotate(15)     #=> ["d", "a", "b", "c"]
+puts
+
+a = [ "a", "b", "c", "d" ]
+p a.my_join         # => "abcd"
+p a.my_join("$")    # => "a$b$c$d"
+puts
+
+p [ "a", "b", "c" ].my_reverse   #=> ["c", "b", "a"]
+p [ 1 ].my_reverse               #=> [1]
