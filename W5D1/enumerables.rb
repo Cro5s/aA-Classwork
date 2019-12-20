@@ -103,13 +103,14 @@ class Array
     str
   end
 
-  def my_reverse
-    arr = self.dup
-    
-    return [] if arr.empty?
+  def my_reverse # ["a", "b", "c"]
+    reversed  = []
 
+    self.length.times do
+      reversed << self.pop
+    end
     
-
+    reversed
   end
 
 end
