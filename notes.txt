@@ -1,0 +1,23 @@
+self = [1,4,5,3,9]
+
+sorted_left = [1,4,5]
+sorted_right = [3,9]
+
+arr_1 = []
+arr_2 = [9]
+sorted = [1,3,4,5]
+
+[1,3,4,5] += [] + [9]
+
+self = [1,[3],[4,5,]9] [1,]
+
+self = [1,3,4,5] Prc.new {sum = accumulartor + ele_2}
+
+sentence = the cat is cool
+self = cool is cat the now
+
+[0,1,1,2,3]
+
+prev_num = [1]
+two_nums_ago = 0
+next_num = [0,1] + 0
