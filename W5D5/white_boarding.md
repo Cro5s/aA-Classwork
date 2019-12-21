@@ -14,7 +14,7 @@ class Array
       sorted_right.merge_sort(&prc)
     end
 
-      merge(sorted_left, sorted_right, prc)
+    merge(sorted_left, sorted_right, prc)
   end
 
   def merge(arr_1, arr_2, prc)

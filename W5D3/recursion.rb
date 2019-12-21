@@ -75,26 +75,20 @@ def merge_sort(array)
   # base case
   case array.length 
   
-  when 0..1
+  when (0..1)
     return array
-    # when 2
-    #   first = array[0]
-    #   second = array[1]
-
-    #   first < second ? nil : 
-    #     (array[0] = second; array[1] = first)
-
-    #   return array
+  
   else
-    first_half = array[0..array.length/2]       
-    second_half = array[(array.length/2)+1..-1]  
-    
+    half = array.count / 2
+    first_half = array.take(half)       
+    second_half = array.drop(half)
+
     sorted_first = merge_sort(first_half)  
     sorted_second = merge_sort(second_half) 
-
-    merge(sorted_first, sorted_second)
+    
   end
-
+  
+  merge(sorted_first, sorted_second)
 end
 
 def merge(arr_1, arr_2)
@@ -109,20 +103,9 @@ def merge(arr_1, arr_2)
 
   end
 
-  merged += arr_1 + arr_2
+  merged.concat(arr_1).concat(arr_2)
 end
 
-# sorted_first.each { |ele|
-
-#   if sorted_second.empty?
-#     sorted << ele
-#     next 
-#   end
-
-#   while !sorted_second.empty? && ele > sorted_second[0]
-#     sorted << sorted_second.shift
-#   end
-
-#   sorted << ele
-# }
-
+arr = [1, 4, 6, 2, 8, 6, 5, 9, 0]
+p merge_sort(arr) # => [0, 1, 2, 4, 5, 6, 6, 8, 9]
+puts
