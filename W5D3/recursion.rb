@@ -27,39 +27,30 @@ class Array
   end
 end
 
-# fibonacci(1) => [1]
-# fibonacci(2) => [1,1]
-# fibonacci(3) => [1,1,2]
-# fibonacci(4) => [1,1,2,3]
 def fibonacci(n)
-  return [n] if n == 1
   return [1, 1].take(n) if n <= 2
-
+  
   prev_fib = fibonacci(n-1)
   last_num = prev_fib[-1]
   two_nums_ago = prev_fib[-2]
   
   next_num = last_num + two_nums_ago
-
+  
   prev_fib.push(next_num)
 end
 
-
-# bsearch([1, 2, 3], 1) # => 0
-# bsearch([2, 3, 4, 5], 3) # => 1
-# bsearch([2, 4, 6, 8, 10], 6) # => 2
-# bsearch([1, 3, 4, 5, 9], 5) # => 3
-# bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
-# bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
-# bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
+p fibonacci(1) # => [1]
+p fibonacci(2) # => [1,1]
+p fibonacci(3) # => [1,1,2]
+puts fibonacci(4) # => [1,1,2,3]
 
 def bsearch(array, target) 
   index = array.length/2 # 1
-
+  
   dif = target <=> array[index] # -1
   
   return 0 if array.empty?
-
+  
   if dif == 0
     return index
   elsif dif == -1 
@@ -67,9 +58,17 @@ def bsearch(array, target)
   elsif dif == 1 
     array.length.even? ? (index + 1) + bsearch(array[index + 1..-1], target) : index + bsearch(array[index + 1..-1], target)
   end
-
+  
 end
 
+p bsearch([1, 2, 3], 1) # => 0
+p bsearch([2, 3, 4, 5], 3) # => 1
+p bsearch([2, 4, 6, 8, 10], 6) # => 2
+p bsearch([1, 3, 4, 5, 9], 5) # => 3
+p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
+p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
+p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
+puts
 
 def merge_sort(array)
   # base case
@@ -108,4 +107,19 @@ end
 
 arr = [1, 4, 6, 2, 8, 6, 5, 9, 0]
 p merge_sort(arr) # => [0, 1, 2, 4, 5, 6, 6, 8, 9]
-puts
+puts 
+
+class Array
+  def subsets
+    return [[]] if self.empty?
+
+    subs = take(count - 1).subsets
+    subs.concat(subs.map { |sub| sub + self[last] })
+  end
+
+  p subsets([]) # => [[]]
+  p subsets([1]) # => [[], [1]]
+  p subsets([1, 2]) # => [[], [1], [2], [1, 2]]
+  p subsets([1, 2, 3]) # => [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+  puts
+end
