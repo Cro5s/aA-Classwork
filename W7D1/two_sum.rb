@@ -1,10 +1,10 @@
 def bad_two_sum?(arr, target_sum) # Time: O(n^2) Space: O(1)
-    arr.each_with_index do |el1, i1|
-        arr.each_with_index do |el2, i2|
-            return true if (el1 + el2 == target_sum) && i2 > i1
-        end
+  arr.each_with_index do |el1, i1|
+    arr.each_with_index do |el2, i2|
+      return true if (el1 + el2 == target_sum) && i2 > i1
     end
-    false
+  end
+  false
 end
 
 arr = [0, 1, 5, 7]
@@ -41,7 +41,7 @@ p okay_two_sum?(arr, 10)
 p okay_two_sum?(arr, 8)
 puts
 
-def two_sum?(arr, target_sum)
+def two_sum?(arr, target_sum) # Time: O(n) Space: O(1)
   hash = {}
   
   arr.each do |ele|
