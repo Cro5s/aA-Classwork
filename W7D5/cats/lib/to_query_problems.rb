@@ -157,14 +157,18 @@ def no_apples_for_blair_sub
     cats.name
   FROM
     cats
+  JOIN
+    cattoys ON cattoys.cat_id = cats.id
   WHERE
-    cats.name IN (SELECT
-      cats.name
+    cattoys.toy_id IN (SELECT
+      toys.id
     FROM
-      cats
+      toys
     WHERE
-    
-    )
+      toys.name = 'Apple'
+    )AND cats.name != 'Blair'
+    ORDER BY
+      cats.name;
   SQL
 end
 
@@ -175,6 +179,18 @@ def toys_that_brendon_owns
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
+    SELECT
+      toys.name
+    FROM
+      toys
+    JOIN
+      cattoys ON toys.id = cattoys.toy_id
+    JOIN
+      cats ON cattoys.cat_id = cats.id
+    WHERE
+      cats.name = 'Brendon'
+    ORDER BY
+      toys.name;
 
   SQL
 end
@@ -185,6 +201,23 @@ def toys_that_brendon_owns_sub
 
   # USE A SUBQUERY
   execute(<<-SQL)
+    SELECT
+      toys.name
+    FROM
+      toys
+    JOIN
+      cattoys ON toys.id = cattoys.toy_id
+    WHERE
+      cattoys.cat_id IN (
+        SELECT
+          cats.id
+        FROM
+          cats
+        WHERE
+          cats.name = 'Brendon'
+      )
+      ORDER BY
+        toys.name;
 
   SQL
 end
@@ -199,7 +232,16 @@ def price_like_shiny_mouse
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL) 
-  
+  SELECT
+    same_price_toys.name, same_price_toys.price
+  FROM
+    toys as same_price_toys
+  JOIN
+    toys ON same_price_toys.price = toys.price
+  WHERE
+    toys.name = 'Shiny Mouse' AND same_price_toys.name != 'Shiny Mouse'
+  ORDER BY
+    same_price_toys.name;
   SQL
 end
 
@@ -213,7 +255,21 @@ def price_like_shiny_mouse_sub
 
   # USE A SUBQUERY
   execute(<<-SQL) 
-
+    SELECT
+      toys.name, toys.price
+    FROM
+      toys
+    WHERE
+      toys.name != 'Shiny Mouse' AND toys.price IN (
+        SELECT
+          toys.price
+        FROM
+          toys
+        WHERE
+          toys.name = 'Shiny Mouse'
+      )
+      ORDER BY
+        toys.name;
   SQL
 end
 
@@ -225,7 +281,16 @@ def just_like_orange
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
-
+    SELECT
+      not_orange.name, not_orange.breed
+    FROM
+      cats AS not_orange
+    JOIN
+      cats AS orange ON orange.breed = not_orange.breed
+    WHERE
+      orange.name = 'Orange' AND not_orange.name != 'Orange'
+    ORDER BY
+      not_orange.name;
   SQL
 end
 
@@ -237,7 +302,21 @@ def just_like_orange_sub
 
   # USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT
+    cats.name, cats.breed
+  FROM
+    cats
+  WHERE
+    cats.breed = (
+      SELECT
+        cats.breed
+      FROM
+        cats
+      WHERE
+        cats.name = 'Orange'
+    ) AND cats.name != 'Orange'
+    ORDER BY
+      cats.name;
   SQL
 end
 
@@ -251,7 +330,18 @@ def toys_that_jet_owns
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
-
+  SELECT
+    other_cats.name, other_toys.name
+  FROM
+    cats AS other_cats
+  JOIN
+    cattoys AS jet ON other_cats.id = jet.cat_id
+  JOIN
+    toys AS jetstoys ON jet.toy_id = jetstoys.id
+  JOIN
+    
+  WHERE
+    toys.name = 
   SQL
 end
 
