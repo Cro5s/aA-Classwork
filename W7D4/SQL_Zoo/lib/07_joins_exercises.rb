@@ -40,6 +40,11 @@ end
 def ford_films
   # List the films in which 'Harrison Ford' has appeared.
   execute(<<-SQL)
+    SELECT DISTINCT movies.title
+    FROM movies
+    JOIN castings ON movies.id = castings.movie_id
+    JOIN actors ON actors.id = castings.actor_id
+    WHERE actors.name = 'Harrison Ford';
   SQL
 end
 
@@ -68,6 +73,13 @@ def andrews_films_and_leads
   # List the film title and the leading actor for all of the films 'Julie
   # Andrews' played in.
   execute(<<-SQL)
+    SELECT movies.title, lead_actors.name
+    FROM movies
+    JOIN castings AS julie_castings ON julie_castings.movie_id = movies.id
+    JOIN actors AS julie_actors ON julie_castings.actor_id = julie_actors.id 
+    JOIN castings AS lead_castings ON lead_castings.movie_id = movies.id
+    JOIN actors AS lead_actors ON  lead_castings.actor_id = lead_actors.id
+    WHERE julie_actors.name = 'Julie Andrews' AND lead_castings.ord = 1;
   SQL
 end
 
