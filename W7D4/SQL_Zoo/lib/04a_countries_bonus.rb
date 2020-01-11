@@ -45,7 +45,7 @@ def largest_in_continent
       FROM
         countries
       WHERE
-        continent
+        continent 
     );
   SQL
 end
