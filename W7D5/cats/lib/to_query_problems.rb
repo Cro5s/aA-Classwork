@@ -133,11 +133,11 @@ def no_apples_for_blair
     SELECT
       cats.name
     FROM
-      cats
+      toys
     JOIN
-      cattoys ON cattoys.cat_id = cats.id
+      cattoys ON cattoys.toy_id = toys.id
     JOIN
-      toys ON toys.id = cattoys.toy_id
+      cats ON cats.id = cattoys.cat_id
     WHERE
       toys.name = 'Apple' AND cats.name != 'Blair'
     ORDER BY
@@ -330,18 +330,22 @@ def toys_that_jet_owns
 
   # DO NOT USE A SUBQUERY
   execute(<<-SQL)
-  SELECT
-    other_cats.name, other_toys.name
+  SELECT DISTINCT
+    other_cats.name, jtoys.name
   FROM
-    cats AS other_cats
+    cats AS jet
   JOIN
-    cattoys AS jet ON other_cats.id = jet.cat_id
+    cattoys AS jettoys ON jet.id = jettoys.cat_id
   JOIN
-    toys AS jetstoys ON jet.toy_id = jetstoys.id
+    toys AS jtoys ON jtoys.id = jettoys.toy_id
   JOIN
-    
+    cattoys AS other_cattoys ON jtoys.id = other_cattoys.toy_id
+  JOIN
+    cats AS other_cats ON other_cats.id = other_cattoys.cat_id
   WHERE
-    toys.name = 
+    jet.name = 'Jet' AND other_cats.name != 'Jet'
+  ORDER BY
+    other_cats.name;
   SQL
 end
 
@@ -353,6 +357,28 @@ def toys_that_jet_owns_sub
 
   # USE A SUBQUERY
   execute(<<-SQL)
-
+    SELECT
+      cats.name, toys.name
+    FROM
+      cats
+    JOIN
+      cattoys ON cats.id = cattoys.cat_id
+    JOIN
+      toys ON toys.id = cattoys.toy_id
+    WHERE
+      cats.name != 'Jet' AND toys.id IN (
+        SELECT
+          toys.id
+        FROM
+          cats
+        JOIN
+          cattoys ON cats.id = cattoys.cat_id
+        JOIN
+          toys ON toys.id = cattoys.toy_id
+        WHERE
+          cats.name = 'Jet'
+      )
+      ORDER BY
+        cats.name;
   SQL
 end
