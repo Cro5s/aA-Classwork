@@ -27,7 +27,6 @@ module Associatable
       WHERE
         cats.id = 1
     SQL
-    # ok it works
 
     define_method(name) { 
       query = <<-SQL
