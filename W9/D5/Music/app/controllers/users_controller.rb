@@ -9,10 +9,10 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:session_token] = @user.reset_session_token!
-      redirect_to :index
+      redirect_to :index #redirect to home page
     else
       flash[:errors] = @user.errors.full_messages
-      render :new
+      render :new, status: 401
     end
   end
 
