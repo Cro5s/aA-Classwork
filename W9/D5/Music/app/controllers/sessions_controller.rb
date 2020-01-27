@@ -9,18 +9,17 @@ class SessionsController < ApplicationController
     user = User.find_by_credentials(params[:user][:email], params[:user][:password])
     
     if user
-      session[:session_token] = user.reset_session_token!
+      log_in_user(user)
       flash[:success] = "Logged in Successfully. Welome Back!"
-      redirect_to :index # Send user to home page url shortcut
+      redirect_to user_url
     else
-      flash[:error] = "Wrong email or password"
+      flash.now[:error] = "Wrong email or password"
       render :new, status: 401
     end
   end
 
   def destroy
-    current_user.reset_session_token!
-    session[:session_token] = nil
+    log_out_user!
     flash[:success] = "Logged out Successfully"
     redirect_to :index # Send user to home page url shortcut
   end

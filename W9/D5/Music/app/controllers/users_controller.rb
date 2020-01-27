@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  def show
+    @users = User.all
+    render :show
+  end
+
   def new
     @user = User.new
     render :new
@@ -8,8 +13,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      session[:session_token] = @user.reset_session_token!
-      redirect_to :index #redirect to home page
+      log_in_user!(@user)
+      redirect_to :show 
     else
       flash[:errors] = @user.errors.full_messages
       render :new, status: 401
