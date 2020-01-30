@@ -14,7 +14,8 @@
 	border: 1px solid $light-gray;
 	border-bottom: none;
 	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+  border-top-right-radius: 3px;
+  
 }
 
 .language-nav a {
@@ -45,6 +46,10 @@
 .masthead-links li {
 	margin-left: 10px;
 	border-right: 1px solid $light-gray;
+}
+
+.masthead-links li:last-child {
+	border-right: none;
 }
 
 .masthead-links button {
