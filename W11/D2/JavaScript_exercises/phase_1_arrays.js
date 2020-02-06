@@ -26,19 +26,20 @@ Array.prototype.myUniq = function () {
 //  };
 
 Array.prototype.twoSum = function () {
-    const pairSum = [];
-    for(let i = 0; i < this.length - 1; i++){
-        if ( (this[i] + this[i+1]) === 0 ){
-            let temp = [this[i],this[i+1]];
-            pairSum.push(temp);
-        };
+  const pairSum = [];
+  for(let i = 0; i < this.length - 1; i++){
+    if ( (this[i] + this[i+1]) === 0 ){
+      let temp = [this[i],this[i+1]];
+      pairSum.push(temp);
     };
-    return pairSum;
+  };
+  return pairSum;
 };
 
  // [1,2,-2,-3,-1].twoSum() // [ [ 2, -2 ] ]
 
  Array.prototype.transpose = function (arr) {
+   // Array{length: 5 , () => Array{length: 5}}
   const transposedArray = Array.from( {length: this.length}, () => Array.from({length: this[0].length} ) );
 
   for (let i = 0; i < this.length; i++) {
@@ -50,4 +51,3 @@ Array.prototype.twoSum = function () {
 
   return transposedArray;
  };
-// Array{length: 5 , () => Array{length: 5}}

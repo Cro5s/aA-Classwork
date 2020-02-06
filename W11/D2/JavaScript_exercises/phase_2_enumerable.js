@@ -1,31 +1,34 @@
-Array.prototype.myEach = function (cb) {
+Array.prototype.myEach = function (myEachCb) {
   for (let i = 0; i < this.length; i++) {
-    console.log( cb(this[i]) );
+    myEachCb(this[i]);
   };
 };
 
-function cb(el) {
-  console.log(el);
+/* a =[5, 21, 18]
+a.myEach(cb)
+5
+undefined
+21
+undefined
+18
+undefined
+undefined */
+
+// def my_map (&prc)
+//   self.each do |el|
+
+//   end
+// end
+
+Array.prototype.myMap = function(myMapcb) {
+  const newArray = [];
+    function myEachCb (el){
+      newArray.push(myMapcb(el))
+    }
+  this.myEach(myEachCb);
+  return newArray;
 };
 
-// //function cb(el) {
-// ...console.log(el);
-// ... };
-// undefined
-//     > b =[5, 21, 18]
-//     [5, 21, 18]
-//         > b.myEach(cb)
-// 5
-// undefined
-// 21
-// undefined
-// 18
-// undefined
-// undefined
-
-
-Array.prototype.myMap = function(cb) {
-    const resultsArray = [];
-    this.myEach(cb)
+function myMapcb(el) {
+  return el * 2;
 };
-
