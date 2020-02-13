@@ -1,0 +1,5 @@
+/* PHASE 11: Icons */
+[class*="icon-"] {
+  background-image: "../images/sprite.jpg";
+  background-size: 25px;
+}
