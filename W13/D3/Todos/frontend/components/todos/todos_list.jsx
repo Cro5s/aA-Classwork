@@ -4,12 +4,12 @@ import TodoForm from '../todo_list/todo_form'
 
 export const TodoList = (props) => { 
 
-    const todoLists = props.todos.map((todo, idx) => <TodoListItem key={idx} todo={todo}/>)
+  const todoLists = props.todos.map((todo, idx) => <TodoListItem key={idx} todo={todo}/>)
     
-    return (
-        <ul>
-            {todoLists}
-            <TodoForm receiveTodo={props.receiveTodo}/>
-        </ul> 
-    )
+  return (
+    <ul>
+      {todoLists}
+      <TodoForm receiveTodo={props.receiveTodo}/>
+    </ul> 
+  );
 }
