@@ -11,7 +11,6 @@ class PokemonIndex extends React.Component {
   }
 
   render() {
-
     return (
       <>
         <label>Pokemon</label>
