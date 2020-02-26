@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { fetchAllPokemon } from "./util/api_util";
 import { 
   receiveAllPokemon, 
   requestAllPokemon 
