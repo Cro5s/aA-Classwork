@@ -1,6 +1,6 @@
 import { RECEIVE_CURRENT_USER } from "../actions/session_actions";
 
-export default usersReducer = (state = {}, action) => {
+export function usersReducer(state = {}, action) {
   Object.freeze(state);
 
   switch (action.type) {

@@ -3,7 +3,7 @@ import { sessionReducer } from "./session_reducer";
 import { entitiesReducer } from "./entities_reducer";
 import { errorsReducer } from "./errors_reducer";
 
-export default rootReducer = () => {
+export function rootReducer() {
   return combineReducers({
     entities: entitiesReducer,
     session: sessionReducer,

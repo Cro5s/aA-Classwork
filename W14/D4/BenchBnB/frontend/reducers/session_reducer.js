@@ -3,7 +3,7 @@ import {
   LOGOUT_CURRENT_USER
 } from "../actions/session_actions";
 
-export default function sessionReducer(state = { id: null }, action) {
+export function sessionReducer(state = { id: null }, action) {
   Object.freeze(state);
 
   switch (action.type) {
