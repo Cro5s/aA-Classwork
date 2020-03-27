@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 require('./models');
 const db = require('./config/keys').mongoURI;
 const User = mongoose.model("User");
+const graphqlHTTP = require('express-graphql');
+const expressPlayground = require(
+  'graphql-playground-middleware-express'
+).default;
+const { schema, resolvers } = require('./schema/index');
 
 mongoose
   .connect(db, { 
@@ -13,6 +18,18 @@ mongoose
   })
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
+
+
+
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: resolvers
+  })
+);
+
+app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
 
 app.get("/hello", (req, res) => res.send("Hello World!"));
 

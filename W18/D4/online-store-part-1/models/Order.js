@@ -12,8 +12,8 @@ const OrderSchema = new Schema({
     ref: "Product"
   }],
 
-, {}  timestamps: true
+}, {  timestamps: true
 
 })
 
-model.exports = mongoose.model('Order', OrderSchema);
+module.exports = mongoose.model('Order', OrderSchema);
