@@ -1,23 +1,14 @@
 const mongoose = require('mongoose');
-const User = mongoose.model('User');
+const types = require('./types/index');
+// const User = mongoose.model('User');
 const Category = mongoose.model('Category');
-const Product = mongoose.model('Product');
+// const Product = mongoose.model('Product');
 const Order = mongoose.model('Order');
 const { makeExecutableSchema } = require("graphql-tools");
+const { merge } = require('lodash');
 
-const typeDefs = `
-  type User {
-    _id: ID!
-    email: String!
-    orders: [Order]
-  }
-  
-  type Product {
-    _id: ID!
-    name: String!
-    description: String
-    category: Category
-  }
+
+const otherTypeDefs = `
 
   type Category {
     _id: ID!
@@ -33,48 +24,67 @@ const typeDefs = `
 
   type Query {
     categories: [Category]
+    orders: [Order]
+    order(_id: ID!): Order
+  }
+
+  type Mutation {
+    createCategory(name: String): Category
   }
 `;
 
-const resolvers = {
+const otherResolvers = {
+
+  Mutation: {
+    createCategory(_, { name }) {
+      return new Category({ name }).save();
+    },
+
+  },
+
   Query: {
     categories(_, __) {
       return Category.find({});
-    }
-  },
+    },
 
-  User: {
-    orders(parentValue, _) {
-      return Orders.find({ user: parentValue._id })
-    }
-  },
+    products(_, __) {
+      return Product.find({});
+    },
 
-  Product: {
-    category: async (parentValue, _) => {
-      const product = await parentValue.populate('category').execPopulate();
-      return product.category;
+    product(_, { _id }) {
+      return Product.findById(_id);
+    },
+    orders(_, __) {
+      return Order.find({});
+    },
+    order(_, { _id }) {
+      return Order.findById(_id);
     }
   },
 
   Order: {
     user: async (parentValue, _) => {
-      const product = await parentValue.populate('user').execPopulate();
-      return product.user;
+      const order = await parentValue.populate('user').execPopulate();
+      return order.user;
     },
 
     products: async (parentValue, _) => {
-      const product = await parentValue.populate('products').execPopulate();
-      return product.products;
+      const order = await parentValue.populate('products').execPopulate();
+      return order.products;
     }
   },
 
   Category: {
     products(parentValue, _) {
       return Product.find({ category: parentValue._id });
+
     }
   }
 
 };
+
+const typeDefs = [ ...types.map(type => type.typeDefs), otherTypeDefs ]
+const resolvers = merge(...types.map(type => type.resolvers), otherResolvers);
 
 const schema = makeExecutableSchema({
   typeDefs,
