@@ -1,2 +1,6 @@
-module.exports = [require('./User')];
-module.exports = [require('./Product')];
+module.exports = [
+  require('./User'),
+  require('./Product'),
+  require('./Order'),
+  require('./Category')
+];

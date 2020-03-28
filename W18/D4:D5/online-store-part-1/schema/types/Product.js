@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
-const Order = mongoose.model('Order');
-const User = mongoose.model('User');
-const { makeExecutableSchema } = require("graphql-tools");
 
 const typeDefs = `
   type Product {
@@ -27,38 +24,50 @@ const typeDefs = `
     success: Boolean!
     message: String
   }
-`
+`;
 
 const resolvers = {
   Product: {
     category: async (parentValue, _) => {
-      const product = await parentValue.populate('category').execPopulate();
+      const product = await parentValue.populate("category").execPopulate();
       return product.category;
     }
   },
 
   Mutation: {
-    deleteProduct: async(_, { _id }) => {
-      const prod = await Product.findOne({_id})
-      console.log(prod)
+    deleteProduct: async (_, { _id }) => {
+      const prod = await Product.findOne({ _id });
+      console.log(prod);
       if (prod) {
-        await prod.remove()
+        await prod.remove();
         return {
           success: true,
-          message: "Product removed",
-        } 
+          message: "Product removed"
+        };
       } else {
         return {
           success: false,
           message: "Unable to remove product"
-        }
+        };
       }
     },
 
     createProduct(_, { name, price }) {
       return new Product({ name, price }).save();
+    }
+  },
+
+  Query: {
+    products(_, __) {
+      return Product.find({});
     },
-  }
-}
+
+    product(_, { _id }) {
+      return Product.findById(_id);
+    }
+    
+  },
+
+};
 
 module.exports = { typeDefs, resolvers };
