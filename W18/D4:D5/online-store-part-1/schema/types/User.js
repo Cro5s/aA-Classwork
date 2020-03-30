@@ -8,16 +8,24 @@ const typeDefs = `
     orders: [Order]
   }
 
+  type UserCredentials {
+    _id: ID!
+    email: String!
+    orders: [Order]
+    token: String!
+  }
+
   extend type Mutation {
-    signup(email: String, password: String): User
+    signup(email: String, password: String): UserCredentials
   }
 `;
 
 const resolvers = {
   Mutation: {
     signup(_, { email, password }) {
-    const newUser = new User({ email, password });
-    return newUser.save();
+      return UserSchema.statics.signUp(email, password);
+      // const newUser = new User({ email, password });
+      // return newUser.save();
     }
   },
 
