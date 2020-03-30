@@ -17,15 +17,14 @@ const typeDefs = `
 
   extend type Mutation {
     signup(email: String, password: String): UserCredentials
+    
   }
 `;
 
 const resolvers = {
   Mutation: {
     signup(_, { email, password }) {
-      return UserSchema.statics.signUp(email, password);
-      // const newUser = new User({ email, password });
-      // return newUser.save();
+      return User.signUp(email, password);
     }
   },
 

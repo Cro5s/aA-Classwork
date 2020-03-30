@@ -21,8 +21,9 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.statics.signUp = async function(email, password) {
+  const User = this;
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await new User(email, hashedPassword, token)
+  const user = await new User({ email, password: hashedPassword });
   await user.save();
   const token = jwt.sign({ _id: user._id }, secret);
 
