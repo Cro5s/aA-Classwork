@@ -10,19 +10,22 @@ const expressPlayground = require(
 ).default;
 const { schema, resolvers } = require('./schema/index');
 
-mongoose
-  .connect(db, { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true, 
-    useCreateIndex: true 
-  })
+mongoose.connect(db, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true, 
+  useCreateIndex: true 
+})
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
 
-
+const passport = require('passport');
+require('./config/passport')(passport);
+app.use(passport.initialize());
+const { passportAuthenticate } = require('./middlewares');
 
 app.use(
   "/graphql",
+  passportAuthenticate(passport),
   graphqlHTTP({
     schema: schema,
     rootValue: resolvers

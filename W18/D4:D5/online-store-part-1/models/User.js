@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+  
 }, {
   timestamps: true
   
@@ -21,7 +22,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.statics.signUp = async function(email, password) {
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User(email, hashedPassword)
+  const user = await new User(email, hashedPassword, token)
   await user.save();
   const token = jwt.sign({ _id: user._id }, secret);
 
