@@ -2,13 +2,13 @@ import gql from "graphql-tag";
 
 export const typeDefs = gql`
   extend type Query {
-    isLoggedIn: Boolean!
+    loggedIn: Boolean!
   }
 `;
 
 export const resolvers = {
   Query: {
-    isLoggedIn: () => {
+    loggedIn: () => {
       return !!localStorage.getItem("token");
     }
   }

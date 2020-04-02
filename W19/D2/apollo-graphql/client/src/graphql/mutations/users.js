@@ -1,4 +1,4 @@
-import gql from "graphql-tags";
+import gql from "graphql-tag";
 
 const LOG_IN = gql`
   mutation LogIn($username: String!, $password: String!) {
@@ -6,7 +6,7 @@ const LOG_IN = gql`
       _id
       username
       token
-      loggedIn
+      # loggedIn
     }
   }
 `;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const jwt = require("jsonwebtoken");
@@ -17,13 +17,15 @@ const UserSchema = new Schema({
     min: 8,
     max: 32
   },
-  books: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Book'
-  }]
+  books: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Book"
+    }
+  ]
 });
 
-UserSchema.statics.login = async function (username, password) {
+UserSchema.statics.login = async function(username, password) {
   const User = this;
   const user = await User.findOne({ username });
   console.log(user);
@@ -35,4 +37,4 @@ UserSchema.statics.login = async function (username, password) {
   return null;
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);

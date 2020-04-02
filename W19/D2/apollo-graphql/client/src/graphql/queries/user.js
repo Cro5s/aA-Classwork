@@ -14,7 +14,7 @@ export const CURRENT_USER = gql`
 `;
 
 export const IS_LOGGED_IN = gql`
-  query IsLoggedIn {
-    isLoggedIn @client
+  query loggedIn {
+    loggedIn @client
   }
 `;

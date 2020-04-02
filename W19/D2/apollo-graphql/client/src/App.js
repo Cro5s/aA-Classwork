@@ -7,12 +7,14 @@ import BookShow from "./pages/BookShow";
 import AuthorIndex from "./pages/AuthorIndex";
 import AuthorShow from "./pages/AuthorShow";
 import UserProfile from "./pages/UserProfile";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={BookIndex} />
+        <AuthRoute exact path="/login" component={Login} />
         <ProtectedRoute exact path="/profile" component={UserProfile} />
         <Route path="/books/:bookId" component={BookShow} />
         <Route path="/authors/:authorId" component={AuthorShow} />
@@ -30,7 +32,7 @@ const ProtectedRoute = props => {
 
   if (loading) return null;
   if (error || !data) return <Redirect to={redirectTo} />;
-  if (data.isLoggedIn) {
+  if (data.loggedIn) {
     return <Route component={component} {...rest} />;
   } else {
     return <Redirect to={redirectTo} />;
@@ -43,7 +45,7 @@ const AuthRoute = props => {
 
   if (loading) return null;
   if (error || !data) return <Redirect to={redirectTo} />;
-  if (data.isLoggedIn) {
+  if (data.loggedIn) {
     return <Redirect to={redirectTo} />;
   } else {
     return <Route component={component} {...rest} />;
